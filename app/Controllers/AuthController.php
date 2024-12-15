@@ -6,6 +6,10 @@ use App\Models\User;
 
 class AuthController
 {
+    public function redirect() {
+        header("Location: /login");
+        exit;
+    }
     protected function checkAuthorization($expectedType, $expectedRole = null)
     {
         if (!isset($_SESSION['user'])) {
@@ -96,6 +100,6 @@ class AuthController
     protected function render($view, $data = [])
     {
         extract($data);
-        include __DIR__ . "/../../resources/views/$view.php";
+        include "../app/views/$view.php";
     }
 }

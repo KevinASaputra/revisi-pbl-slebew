@@ -331,11 +331,11 @@
     </span>
 
     <span class="flex flex-wrap p-16 justify-between gap-y-8">
-    <h1 class="font-bold text-lg w-full">Data Mahasiswa</h1>
+        <h1 class="font-bold text-lg w-full">Data Mahasiswa</h1>
         <!-- modular submisi_4 -->
         <?php
         $isAdmin = false;
-        include "../modular_submisi_4.php"; ?>
+        include "../app/views/modular_submisi_4.php"; ?>
 
     </span>
 

@@ -4,8 +4,9 @@ $description = "Ini adalah beranda mahasiswa.";
 
 $nama = $_SESSION['user']['nama'] ?? 'Nama tidak ditemukan';
 $nim = $_SESSION['user']['identifier'] ?? 'NIM tidak ditemukan';
+$foto_profil = $_SESSION['user']['foto_profil'] ?? 'image_placeholder.png';
 
-include __DIR__ . '/../../layouts/mahasiswa.php';
+include "../app/views/layouts/mahasiswa.php";
 ?>
 
 <!-- MAIN CONTENT -->
@@ -17,7 +18,7 @@ include __DIR__ . '/../../layouts/mahasiswa.php';
       <div class="relative inline-block">
         <!-- Foto Profil -->
         <img
-          src="../../../public/assets/images/image.png" 
+          src="/assets/images/<?php echo $foto_profil; ?>"
           alt="profile"
           class="w-64 h-64 object-cover rounded-2xl" />
         <!-- Icon add_a_photo -->
@@ -37,6 +38,12 @@ include __DIR__ . '/../../layouts/mahasiswa.php';
       </div>
     </section>
     <section class="flex justify-center gap-32 text-xl pt-10">
+      <a href="/mahasiswa/submisi" class="bg-[#2862C6] text-white p-3 rounded-lg py-4 px-14">
+        Submisi
+      </a>
+      <a href="/mahasiswa/riwayat" class="bg-[#2862C6] text-white p-3 rounded-lg py-4 px-14">
+        Riwayat
+      </a>
       <button onclick="showPopup('changePassword')" class="bg-[#2862C6] text-white p-3 rounded-lg py-4 px-10">
         Ganti Password
       </button>
@@ -44,24 +51,67 @@ include __DIR__ . '/../../layouts/mahasiswa.php';
   </main>
 
   <!-- Pop up Ganti Password -->
-  <section id="changePassword" class="popup hidden fixed inset-0 bg-white bg-opacity-50 grid place-items-center">
-    <form action="" method="POST" class="flex flex-col bg-white p-6 rounded-md text-[#2862C6] w-[455px] items-center gap-5">
+  <section id="changePassword" class="popup hidden fixed inset-0 bg-white bg-opacity-50 grid place-items-center drop-shadow-xl">
+    <form action="/mahasiswa/change-password" method="POST" class="flex flex-col bg-white p-6 rounded-md text-[#2862C6] w-[455px] items-center gap-5">
       <h4 class="text-2xl font-semibold flex-1">Ganti Password</h4>
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col items-start w-full relative">
         <label for="password_lama">Password Lama</label>
-        <input type="password" name="password_lama" id="password_lama" class="w-full border-[#2862C6] border-2 rounded">
+        <div class="flex items-center w-full">
+          <input
+            type="password"
+            name="password_lama"
+            id="password_lama"
+            class="w-full border-[#2862C6] border-2 rounded pr-10 pl-2 text-[#000000]">
+          <button
+            type="button"
+            onclick="togglePasswordVisibility('password_lama')"
+            class="absolute right-2 material-symbols-outlined text-[#2862C6]">
+            visibility
+          </button>
+        </div>
       </div>
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col items-start w-full relative">
         <label for="password_baru">Password Baru</label>
-        <input type="password" name="password_baru" id="password_baru" class="w-full border-[#2862C6] border-2 rounded">
+        <div class="flex items-center w-full">
+          <input
+            type="password"
+            name="password_baru"
+            id="password_baru"
+            class="w-full border-[#2862C6] border-2 rounded pr-10 pl-2 text-[#000000]">
+          <button
+            type="button"
+            onclick="togglePasswordVisibility('password_baru')"
+            class="absolute right-2 material-symbols-outlined text-[#2862C6]">
+            visibility
+          </button>
+        </div>
       </div>
-      <div class="flex flex-col items-start w-full">
+      <div class="flex flex-col items-start w-full relative">
         <label for="password_baru_konfirmasi">Konfirmasi Password</label>
-        <input type="password" name="password_baru_konfirmasi" id="password_baru_konfirmasi" class="w-full border-[#2862C6] border-2 rounded">
+        <div class="flex items-center w-full">
+          <input
+            type="password"
+            name="password_baru_konfirmasi"
+            id="password_baru_konfirmasi"
+            class="w-full border-[#2862C6] border-2 rounded pr-10 pl-2 text-[#000000]">
+          <button
+            type="button"
+            onclick="togglePasswordVisibility('password_baru_konfirmasi')"
+            class="absolute right-2 material-symbols-outlined text-[#2862C6]">
+            visibility
+          </button>
+        </div>
       </div>
       <div class="flex flex-row-reverse w-full justify-between">
-        <button type="submit" class="bg-[#2862C6] text-white p-3 rounded-lg gap-1 w-48">Konfirmasi</button>
-        <button type="button" onclick="hidePopup('changePassword')" class="bg-white text-[#2862C6] p-3 rounded-lg gap-1 border-[#2862C6] border-2 w-48">
+        <button
+          type="submit"
+          class="bg-[#2862C6] text-white p-3 rounded-lg gap-1 w-48">
+          Konfirmasi
+        </button>
+        <button
+          type="button"
+          onclick="hidePopup('changePassword')"
+          class="bg-white text-[#2862C6] p-3 rounded-lg gap-1 border-[#2862C6] border-2 w-48">
           Batal
         </button>
       </div>
@@ -69,7 +119,7 @@ include __DIR__ . '/../../layouts/mahasiswa.php';
   </section>
 
   <!-- Pop up Ganti Foto -->
-  <section id="changePhoto" class="popup hidden fixed inset-0 bg-white bg-opacity-50 grid place-items-center">
+  <section id="changePhoto" class="popup hidden fixed inset-0 bg-white bg-opacity-50 grid place-items-center drop-shadow-xl">
     <form action="" class="flex flex-col bg-white p-6 rounded-md text-[#2862C6] w-[455px] items-center gap-5">
       <h4 class="text-2xl font-semibold flex-1">Ganti Foto Profil</h4>
       <input type="file" name="profile_photo" accept="image/*" class="w-full border-2 p-1 rounded border-[#2862C6]">
@@ -92,5 +142,34 @@ include __DIR__ . '/../../layouts/mahasiswa.php';
     function hidePopup(id) {
       document.getElementById(id).classList.add('hidden');
     }
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId) {
+      const input = document.getElementById(inputId);
+      const currentType = input.type;
+      input.type = currentType === 'password' ? 'text' : 'password';
+    }
+
+    // Optional: Handle message display (if message exists from session)
+    document.addEventListener('DOMContentLoaded', function() {
+      <?php if (isset($_SESSION['message'])): ?>
+        const messageType = '<?= $_SESSION['message']['type'] ?? '' ?>';
+        const messageText = '<?= htmlspecialchars($_SESSION['message']['text'] ?? '') ?>';
+
+        // Create a modal for displaying messages
+        const messageModal = document.createElement('div');
+        messageModal.className = `fixed inset-0 bg-black bg-opacity-50 z-50 grid place-items-center ${messageType === 'error' ? 'text-red-600' : 'text-green-600'}`;
+        messageModal.innerHTML = `
+        <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+          <p class="text-xl mb-4">${messageText}</p>
+          <button onclick="this.closest('[class*=fixed]').remove()" class="bg-[#2862C6] text-white p-2 rounded-lg">Tutup</button>
+        </div>
+      `;
+
+        document.body.appendChild(messageModal);
+      <?php
+        // Clear the message after displaying
+        unset($_SESSION['message']);
+      endif; ?>
+    });
   </script>
 </body>

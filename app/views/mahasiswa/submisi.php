@@ -1,7 +1,7 @@
 <?php
 $title = "Data Submisi";
 $description = "";
-include "../../layouts/mahasiswa.php"; ?>
+include "../app/views/layouts/mahasiswa.php"; ?>
 
 <body class="bg-[#D9D9D9] font-sans">
     <section class="flex flex-col flex-1">
@@ -12,7 +12,7 @@ include "../../layouts/mahasiswa.php"; ?>
             <?php
             $isAdmin = false;
 
-            include "../modular_submisi.php" ?>
+            include "../app/views/modular_submisi.php" ?>
 
             <span class="text-red-500 flex justify-between">
                 <?php if (!$isAdmin) : ?>

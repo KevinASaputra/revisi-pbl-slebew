@@ -1,7 +1,7 @@
 <?php
 $title = "Riwayat Submisi";
 $description = "Riwayat Submisi";
-include "../../layouts/mahasiswa.php";
+include "../app/views/layouts/mahasiswa.php";
 
 
 // dummy

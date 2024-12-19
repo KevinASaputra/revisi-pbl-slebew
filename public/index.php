@@ -13,19 +13,19 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->load();
 
-// Include core files
-require_once __DIR__ . '/../app/core/databaseConnection.php';  // Pastikan path sudah benar
-require_once __DIR__ . '/../app/controllers/authControllers.php';
-require_once __DIR__ . '/../app/controllers/mahasiswaControllers.php';
-require_once __DIR__ . '/../app/core/app.php';
-require_once __DIR__ . '/../app/core/classRouters.php';
-require_once __DIR__ . '/../app/core/database.php';  // Pastikan kelas Database terimpor dengan benar
+// Initialize Router and App
+$router = new Router(); // Pindahkan instansiasi Router ke atas
+$app = new App($router);
+
+// Memasukkan file rute setelah Router diinstansiasi
+require_once '../app/core/Router.php';
+require_once '../app/core/databaseConnection.php';
+require_once '../app/routes/routeRoot.php';
+
+// Mengatur rute dengan memanggil fungsi setUpRoutes
+setUpRoutes($router); // Pastikan fungsi ini ada di routeRoot.php
 
 try {
-    // Initialize Router and App
-    $router = new Router();
-    $app = new App($router);
-
     // Create a database connection
     $database = new Database();
     $dbConnection = $database->getConnection(); // Mendapatkan koneksi DB

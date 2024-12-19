@@ -5,25 +5,28 @@ use App\Controllers\AuthController;
 use App\Controllers\AdminController;
 use App\Controllers\MahasiswaController;
 
-// Periksa apakah router telah diberikan, jika tidak, lakukan error handling
-if (!isset($router)) {
-  throw new Exception('Router object is not passed to routeRoot.php');
+function setUpRoutes($router) {
+  // Rute untuk login dan logout
+  $router->get('/', [AuthController::class, 'redirect']);
+  $router->get('/login', [AuthController::class, 'showLoginForm']);
+  $router->post('/login', [AuthController::class, 'login']);
+  $router->get('/logout', [AuthController::class, 'logout']);
+  
+  
+  // Rute untuk admin
+  $router->get('/admin', [AdminController::class, 'index']);
+  $router->get('/admin/dashboard', [AdminController::class, 'dashboard']);
+  $router->get('/admin/master-mahasiswa', [AdminController::class, 'masterMahasiswa']);
+  
+  
+  // Rute untuk mahasiswa
+  $router->get('/mahasiswa', [MahasiswaController::class, 'index']);
+  $router->get('/mahasiswa/beranda', [MahasiswaController::class, 'dashboard']);
+  $router->get('/mahasiswa/submisi', [MahasiswaController::class, 'submisi']);
+  $router->get('/mahasiswa/riwayat', [MahasiswaController::class, 'riwayat']);
+  $router->get('/mahasiswa/change-password', [MahasiswaController::class, 'changePassword']);
+  $router->post('/mahasiswa/change-password', [MahasiswaController::class, 'changePassword']);
 }
 
-// Rute untuk admin
-$router->get('/admin', [AdminControllers::class, 'index']);
-$router->get('/admin/dashboard', [AdminControllers::class, 'dashboard']);
-$router->get('/admin/master-mahasiswa', [AdminControllers::class, 'masterMahasiswa']);
-
-// Rute untuk login dan logout
-$router->get('/login', [AuthControllers::class, 'showLoginForm']);
-$router->post('/login', [AuthControllers::class, 'login']);
-$router->get('/logout', [AuthControllers::class, 'logout']);
-
-// Rute untuk mahasiswa
-$router->get('/mahasiswa', [MahasiswaController::class, 'index']);
-$router->get('/mahasiswa/beranda', [MahasiswaController::class, 'dashboard']);
-$router->get('/mahasiswa/submisi', [MahasiswaController::class, 'prestasi']);
-$router->get('/mahasiswa/riwayat', [MahasiswaController::class, 'riwayat']);
 
 

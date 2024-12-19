@@ -3,7 +3,6 @@
 namespace Core;
 
 use App\ErrorHandler;
-use ReflectionClass;
 use ReflectionMethod;
 
 class Router
@@ -50,17 +49,19 @@ class Router
         $uri = $this->normalizeRoute($uri);
         $method = strtoupper($method);
 
+        error_log("Requested URI: $uri, Method: $method");
+
         if (isset($this->routes[$method][$uri])) {
             $handler = $this->routes[$method][$uri];
-            
+
             // If handler is an array (Controller method)
             if (is_array($handler)) {
                 list($controllerClass, $methodName) = $handler;
-                
+
                 try {
                     // Create controller instance
                     $controller = new $controllerClass();
-                    
+
                     // Use reflection to invoke the method
                     $reflectionMethod = new ReflectionMethod($controllerClass, $methodName);
                     return $reflectionMethod->invoke($controller);
@@ -70,7 +71,7 @@ class Router
                     ErrorHandler::handle500('Controller method could not be called');
                 }
             }
-            
+
             // If handler is a callable (closure)
             if (is_callable($handler)) {
                 return call_user_func($handler);

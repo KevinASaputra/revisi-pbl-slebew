@@ -25,7 +25,7 @@ $fileUploadBoxes = [
         <section class="flex flex-col items-center p-2">
             <h1 class="font-semibold text-2xl"><?php echo $box['title']; ?></h1>
             <p class="text-base text-gray-500"><?php echo $box['description']; ?></p>
-            <img src="../../../public/assets/images/image_placeholder.png" alt="placeholder" class="size-56 object-cover">
+            <img src="/assets/images/image_placeholder.png"; alt="placeholder" class="size-56 object-cover">
         </section>
 
         <!-- input or show -->

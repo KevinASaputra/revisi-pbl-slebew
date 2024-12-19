@@ -51,6 +51,6 @@ class App
 
     private function loadRoutes($router)
     {
-      require_once __DIR__ . '/../routes/routeRoot.php';
+        require_once __DIR__ . '/../routes/routeRoot.php';
     }
 }
